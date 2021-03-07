@@ -1,0 +1,33 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.card {
+  margin: 2% 0% !important;
+  width : 50%;
+  height: 130px;
+}
+
+.infected {
+  border-bottom: 10px solid rgba(0, 0, 255, 0.5);
+}
+
+.recovered{
+  border-bottom: 10px solid rgba(0, 255, 0, 0.5);
+}
+
+.deaths{
+  border-bottom: 10px solid rgb(255, 3, 3);
+}
+.active{
+  border-bottom: 10px solid yellow;
+}
+.tests{
+  border-bottom: 10px solid blue ;
+}
+.critical{
+  border-bottom: 10px solid brown;
+}
