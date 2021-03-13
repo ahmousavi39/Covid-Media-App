@@ -9,3 +9,5 @@ export const Recommendation1 = require('./recommendation1.png');
 export const Recommendation2 = require('./recommendation2.png');
 export const Recommendation3 = require('./recommendation3.png');
 export const Recommendation4 = require('./recommendation4.png');
+export const ContactBackground = require('./Contact_Background.jpg');
+export const CovidMedia = require('./CovidMedia.png');

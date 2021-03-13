@@ -2,6 +2,7 @@ import axios from 'axios';
 
 const url = "https://corona.lmao.ninja/v3/covid-19";
 const urlHisory = 'https://disease.sh/v3/covid-19/historical'
+const urlVacine = 'https://disease.sh/v3/covid-19/vaccine/coverage';
 
 export const fetchData = async (country) => {
     let changeableUrl = `${url}/all`;
@@ -119,10 +120,60 @@ export const fetchHistoricalData = async (country) => {
         return { newCasesArray, newDeathsArray, newRecoveredArray };
     } catch (error) {
         console.log(error);
-
     }
 }
 
+
+export const fetchVaccineData = async (country) => {
+    let changeableUrl = `${urlVacine}?lastdays=30`;
+    if (country) {
+        changeableUrl = `${urlVacine}/countries/${country}?lastdays=all`;
+    };
+
+    try {
+        const data = await axios.get(changeableUrl);
+
+        let vaccineArray = [];
+        let dateArray = [];
+        let allDaysCases = [];
+
+        let modifieData;
+
+        if (country) {
+            typeof data.data.timeline === "object" ? modifieData = data.data.timeline : modifieData = data.data.message;
+        } else {
+            modifieData = data.data;
+        }
+
+            for (const [key, value] of Object.entries(modifieData)) {
+                vaccineArray.push(value);
+                var splitted = key.split("/");
+                var dateStr = "20" + splitted[2] + "-" + splitted[0] + "-" + splitted[1];
+                dateArray.push(dateStr);
+            }
+
+
+        vaccineArray.map((value, i) => {
+            if (i === 0) {
+                allDaysCases.push( value );
+            } else {
+                let lastIndex = i - 1;
+                let lastIndexValue = vaccineArray[lastIndex];
+                let newIndexValue = value - lastIndexValue;
+                allDaysCases.push( newIndexValue )
+            }
+        });
+
+        let allCases = { cases: vaccineArray[vaccineArray.length - 1], updated: dateArray[dateArray.length - 1] };
+        let todayCases = { cases: vaccineArray[vaccineArray.length - 1] - vaccineArray[vaccineArray.length - 2], updated: dateArray[dateArray.length - 1] };
+
+        return { allCases, todayCases, "allDaysCases": [allDaysCases, dateArray] };
+    
+    } catch (error) {
+        console.log(error);
+        return { "allCases": {cases: 0, updated: new Date('0-0-0')}, "todayCases": {cases: 0, updated: new Date('0-0-0')}, "allDaysCases": [[],[]] };
+    }
+}
 
 
 export const fetchCountries = async () => {

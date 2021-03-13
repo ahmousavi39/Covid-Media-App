@@ -4,7 +4,7 @@ import { Text } from 'react-native-elements';
 import YoutubePlayer from 'react-native-youtube-iframe';
 import { CoronavirusTransmission, PreventTransmission, ImmuneBoosters, ImmuneBoosters2, WashHand, HighRisk, StayHome, Recommendation1, Recommendation2, Recommendation3, Recommendation4 } from '../assets/images';
 
-export function Wiki() {
+export default function Wiki() {
     return (
         <ScrollView>
             <View style={styles.container}>

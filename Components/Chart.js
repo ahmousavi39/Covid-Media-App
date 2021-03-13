@@ -46,7 +46,6 @@ export function AllChart({ data: {
 
 
 export function HistoricalData({data: {newCasesArray, newDeathsArray, newRecoveredArray}}){
-
  return(
   newCasesArray ? (
   <LineChart
@@ -90,6 +89,44 @@ export function HistoricalData({data: {newCasesArray, newDeathsArray, newRecover
 )
 };
 
+
+export function VaccineChart(props){
+  return(
+    JSON.stringify(props.vaccineData.allDaysCases) ? (
+      props.vaccineData.allDaysCases[0].length === 0 ? (
+      <Text></Text>
+      ): (
+   <LineChart
+   bezier 
+   width={Dimensions.get("window").width}              
+   height={280}
+   data={{
+     datasets: [
+       {
+         data: props.vaccineData.allDaysCases[0],
+         strokeWidth: 2,
+         color: (opacity = 1) => `rgba(146, 144, 144, 0.219)`,
+       }
+     ],
+     legend: ['Vaccine'],
+   }}
+   chartConfig={{
+     backgroundColor: "white",
+     backgroundGradientFrom: "white",
+     backgroundGradientTo: "white",
+     decimalPlaces: 0, 
+     color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+     labelColor: (opacity = 1) => `black`
+   }}            
+   style={{
+     marginVertical: 8
+   }}
+ />
+ )) : (<Text>Loading...</Text>)
+ 
+ )
+ };
+ 
 
 
 export function DailyChart({ data: {
