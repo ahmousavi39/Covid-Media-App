@@ -16,13 +16,12 @@ export default function AllStatics() {
   const [historicalData, setHistoricalData] = useState({});
   const [vaccineData, setVaccineData] = useState({});
   const [refreshing, setRefreshing] = React.useState(false);
-
-  const selectedCountry = useSelector(state => state.countryGlobal);
+  var selectedCountry = useSelector(state => state.countryGlobal);
 
   async function fetchAPI() {
     const fetchedData = await fetchData(selectedCountry);
     setData(fetchedData);
-    if (selectedCountry.length < 1) {
+    if (selectedCountry.length == '') {
       let fetchedHistoricalData = await fetchHistoricalData();
       let fetchedVaccineData = await fetchVaccineData();
       setHistoricalData(fetchedHistoricalData);

@@ -17,6 +17,7 @@ const CustomTouchCard = (props) => {
         Dimensions.removeEventListener('change', onDimensionChange)
       })
     });
+    
     return (
         <View style={[styles.item, props.style, dimensionItem]}>
             {props.children}

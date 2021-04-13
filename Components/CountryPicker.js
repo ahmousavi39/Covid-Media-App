@@ -3,7 +3,7 @@ import { fetchCountries } from '../Data/dummyData';
 import { StyleSheet, Text, View } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import {useSelector, useDispatch} from 'react-redux';
-import {changeCountry} from '../actions'
+import {changeCountry} from '../actions';
 
 const CountryPicker = (props) => {
     const [fetchedCountries, setFetchedCountries] = useState([]);
@@ -18,6 +18,7 @@ const CountryPicker = (props) => {
         }
         fetchAPI();
     }, [setFetchedCountries]);
+
     const searchList =
         fetchedCountries.map(
             (project_name) => {

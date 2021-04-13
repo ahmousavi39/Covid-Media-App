@@ -84,7 +84,7 @@ export function HistoricalData({data: {newCasesArray, newDeathsArray, newRecover
     marginVertical: 8
   }}
 />
-) : (<Text>Loading...</Text>)
+) : (<Text>Selected Coountry didn't yet provided the statics of today.</Text>)
 
 )
 };

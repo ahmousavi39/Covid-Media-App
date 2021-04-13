@@ -15,9 +15,11 @@ export default function TodaysStatics(props) {
   const [historicalData, setHistoricalData] = useState({});
   const [vaccineData, setVaccineData] = useState({});
   const [refreshing, setRefreshing] = React.useState(false);
-  const selectedCountry = useSelector(state => state.countryGlobal);
+  
+  var selectedCountry = useSelector(state => state.countryGlobal);
 
   async function fetchAPI() {
+    selectedCountry = useSelector(state => state.countryGlobal);
     const fetchedData = await fetchData(selectedCountry);
     setData(fetchedData);
     if (selectedCountry.length < 1) {
@@ -38,7 +40,7 @@ export default function TodaysStatics(props) {
   }, [selectedCountry]);
 
   const onRefresh = React.useCallback(async () => {
-    setRefreshing(true);
+    setRefreshing(true);    
     fetchAPI();
     wait(2000).then(() => setRefreshing(false));
   }, []);

@@ -7,6 +7,7 @@ import Wiki from '../Pages/Wiki';
 import About from '../Pages/About';
 import Support from '../Pages/Support';
 import TabNavBottom from '../Components/TabNav';
+import Sources from '../Pages/Sources';
 
 const Stack = createStackNavigator();
 
@@ -30,6 +31,7 @@ const StackNav = () => {
             <Stack.Screen name="About Me" component={About} />
             <Stack.Screen name="Contact Me" component={Contact} />
             <Stack.Screen name="Support Me" component={Support} />
+            <Stack.Screen name="Sources" component={Sources} />
           </Stack.Navigator>
     )
   };
