@@ -18,11 +18,27 @@ export default function TodaysStatics(props) {
   
   var selectedCountry = useSelector(state => state.countryGlobal);
 
+  // async function fetchAPI() {
+  //   selectedCountry = useSelector(state => state.countryGlobal);
+  //   const fetchedData = await fetchData(selectedCountry);
+  //   setData(fetchedData);
+  //   if (selectedCountry.length < 1) {
+  //     let fetchedHistoricalData = await fetchHistoricalData();
+  //     let fetchedVaccineData = await fetchVaccineData();
+  //     setHistoricalData(fetchedHistoricalData);
+  //     setVaccineData(fetchedVaccineData);
+  //   } else {
+  //     let fetchedHistoricalData = await fetchHistoricalData(selectedCountry);
+  //     let fetchedVaccineData = await fetchVaccineData(selectedCountry);
+  //     setHistoricalData(fetchedHistoricalData);
+  //     setVaccineData(fetchedVaccineData);
+  //   };
+  // }
+
   async function fetchAPI() {
-    selectedCountry = useSelector(state => state.countryGlobal);
     const fetchedData = await fetchData(selectedCountry);
     setData(fetchedData);
-    if (selectedCountry.length < 1) {
+    if (selectedCountry.length == '') {
       let fetchedHistoricalData = await fetchHistoricalData();
       let fetchedVaccineData = await fetchVaccineData();
       setHistoricalData(fetchedHistoricalData);
