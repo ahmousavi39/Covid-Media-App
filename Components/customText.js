@@ -9,5 +9,6 @@ const CustomText = (props) => {
 export default CustomText;
 const styles = StyleSheet.create({
     text : {
+        fontFamily : 'Dirooz'
     }
 })

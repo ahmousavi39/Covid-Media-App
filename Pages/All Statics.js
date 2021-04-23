@@ -1,71 +1,43 @@
-import React, { useEffect, useState } from 'react';
-import { Text, RefreshControl, StyleSheet, View, KeyboardAvoidingView, ScrollView, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import React from 'react';
+import { Text, StyleSheet, View, KeyboardAvoidingView, ScrollView, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import AllStaticsCard from '../Components/StaticsCard';
 import CountryPicker from '../Components/CountryPicker';
-import { AllChart, HistoricalData, VaccineChart } from '../Components/Chart';
-import { fetchData, fetchHistoricalData, fetchVaccineData } from '../Data/dummyData';
-import { useSelector } from 'react-redux';
-
-const wait = (timeout) => {
-  return new Promise(resolve => setTimeout(resolve, timeout));
-}
+import AllChart from '../Components/Chart';
+import { fetchData } from '../Data/dummyData';
 
 
-export default function AllStatics() {
-  const [data, setData] = useState({});
-  const [historicalData, setHistoricalData] = useState({});
-  const [vaccineData, setVaccineData] = useState({});
-  const [refreshing, setRefreshing] = React.useState(false);
-  var selectedCountry = useSelector(state => state.countryGlobal);
-
-  async function fetchAPI() {
-    const fetchedData = await fetchData(selectedCountry);
-    setData(fetchedData);
-    if (selectedCountry.length == '') {
-      let fetchedHistoricalData = await fetchHistoricalData();
-      let fetchedVaccineData = await fetchVaccineData();
-      setHistoricalData(fetchedHistoricalData);
-      setVaccineData(fetchedVaccineData);
-    } else {
-      let fetchedHistoricalData = await fetchHistoricalData(selectedCountry);
-      let fetchedVaccineData = await fetchVaccineData(selectedCountry);
-      setHistoricalData(fetchedHistoricalData);
-      setVaccineData(fetchedVaccineData);
-    };
+export default class AllStatics extends React.Component {
+  state = {
+    data: {},
+    country: ''
   }
 
-  useEffect(() => {
-    fetchAPI();
-  }, [selectedCountry]);
+  async componentDidMount() {
+    const fetchedData = await fetchData();
+    this.setState({ data: fetchedData });
+  }
 
-  const onRefresh = React.useCallback(async () => {
-    setRefreshing(true);
-    fetchAPI();
-    wait(2000).then(() => setRefreshing(false));
-  }, []);
+  handleCountryChange = async (country) => {
+    const fetchedData = await fetchData(country);
 
-  return (
-    <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={40}>
-      <ScrollView
-        refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={onRefresh}
-          />
-        }
-      >
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <View>
-            <AllStaticsCard data={data} vaccineData={vaccineData} />
-            <CountryPicker />
-            <AllChart data={data} />
-            <HistoricalData data={historicalData} />
-            <VaccineChart vaccineData={vaccineData} />
-          </View>
-        </TouchableWithoutFeedback>
-      </ScrollView>
-    </KeyboardAvoidingView>
-  )
+    this.setState({ data: fetchedData, country: country })
+  }
+  render() {
+    const { data, country } = this.state;
+    return (
+      <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={40}>
+        <ScrollView>
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <View>
+              <AllStaticsCard isDaily={this.state.isDaily} data={data} />
+              <CountryPicker country={this.state.country} handleCountryChange={this.handleCountryChange} />
+              <AllChart isDaily={this.state.isDaily} data={data} country={country} />
+            </View>
+          </TouchableWithoutFeedback>
+        </ScrollView>
+      </KeyboardAvoidingView>
+    )
+  }
 }
 
 

@@ -1,175 +1,85 @@
-import React from 'react';
-import { Text, Dimensions, StyleSheet } from 'react-native';
-import { BarChart, LineChart } from "react-native-chart-kit";
+import React, { useState, useEffect } from 'react';
+import { FetchDailyData } from '../Data/dummyData';
+import { Bar } from 'react-chartjs-2';
+import { Text } from 'react-native';
 
-export function AllChart({ data: {
+
+export default function AllChart({ data: {
     cases,
     deaths,
     recovered,
-    active}}) {
+    active },
+    country }) {
 
-    
-    const data = {
-      labels: ["Confirmed", "Recvered", "Death", "Active"],
-      datasets: [
-        {
-          data: [cases, recovered, deaths, active]
+    const [daily, setDaily] = useState([]);
+
+    useEffect(() => {
+        const FetchAPI = async () => {
+            setDaily(await FetchDailyData());
         }
-      ]
-    };
+        FetchAPI();
+    }, []);
 
-
-  
     return (
         cases ? (
-            <BarChart
-            data={data}
-            width={Dimensions.get("window").width}              
-            height={280}
-            chartConfig={{
-              backgroundColor: "white",
-              backgroundGradientFrom: "white",
-              backgroundGradientTo: "white",
-              decimalPlaces: 0, // optional, defaults to 2dp
-              color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-              labelColor: (opacity = 1) => `black`,
-              style: {
-                borderRadius: 16,
-                fontSize: 1
-              }
-            }
-          }  
-          />
+            <Bar
+                data={
+                    {
+                        // labels: [t('con.1'), t('rec.1'), t('dea.1'), t('Active.1')],
+                        labels: ["Confirmed", "Recvered", "Death", "Active"],
+                        datasets: [{
+                            // label: t('peo.1'),
+                            label: "People",
+                            backgroundColor: ['rgba(0,0,255,0.5', 'rgba(0,255,0,0.5)', 'rgb(255, 3, 3)', 'yellow', 'blue'],
+                            data: [cases, recovered, deaths, active]
+                        }]
+                    }}
+                options={{
+                    legend: { display: false },
+                    title: { display: true, text: `${country}` },
+                }}
+            />
         ) : (<Text>Loading...</Text>)
     )
 };
 
 
-export function HistoricalData({data: {newCasesArray, newDeathsArray, newRecoveredArray}}){
- return(
-  newCasesArray ? (
-  <LineChart
-  bezier 
-  width={Dimensions.get("window").width}              
-  height={280}
-  data={{
-    datasets: [
-      {
-        data: newCasesArray,
-        strokeWidth: 2,
-        color: (opacity = 1) => `rgba(0, 0, 255, 0.5)`, // optional
-      },
-      {
-        data: newDeathsArray,
-        strokeWidth: 2,
-        color: (opacity = 1) => `rgb(255, 3, 3)`, // optional
-      },
-      {
-        data: newRecoveredArray,
-        strokeWidth: 2,
-        color: (opacity = 1) => `rgba(0, 255, 0, 0.5)`, // optional
-      },
-    ],
-    legend: ['Confirmed', 'Recovered', 'Deaths'],
-  }}
-  chartConfig={{
-    backgroundColor: "white",
-    backgroundGradientFrom: "white",
-    backgroundGradientTo: "white",
-    decimalPlaces: 0, // optional, defaults to 2dp
-    color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-    labelColor: (opacity = 1) => `black`
-  }}            
-  style={{
-    marginVertical: 8
-  }}
-/>
-) : (<Text>Selected Coountry didn't yet provided the statics of today.</Text>)
-
-)
-};
-
-
-export function VaccineChart(props){
-  return(
-    JSON.stringify(props.vaccineData.allDaysCases) ? (
-      props.vaccineData.allDaysCases[0].length === 0 ? (
-      <Text></Text>
-      ): (
-   <LineChart
-   bezier 
-   width={Dimensions.get("window").width}              
-   height={280}
-   data={{
-     datasets: [
-       {
-         data: props.vaccineData.allDaysCases[0],
-         strokeWidth: 2,
-         color: (opacity = 1) => `rgba(146, 144, 144, 0.219)`,
-       }
-     ],
-     legend: ['Vaccine'],
-   }}
-   chartConfig={{
-     backgroundColor: "white",
-     backgroundGradientFrom: "white",
-     backgroundGradientTo: "white",
-     decimalPlaces: 0, 
-     color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-     labelColor: (opacity = 1) => `black`
-   }}            
-   style={{
-     marginVertical: 8
-   }}
- />
- )) : (<Text>Loading...</Text>)
- 
- )
- };
- 
 
 
 export function DailyChart({ data: {
     todayCases,
     todayDeaths,
     todayRecovered,
-}}) {
+},
+    country }) {
 
-    const data = {
-      labels: ["Confirmed", "Recvered", "Death"],
-      datasets: [
-        {
-          data: [todayCases, todayRecovered, todayDeaths]
+    const [daily, setDaily] = useState([]);
+
+    useEffect(() => {
+        const fetchAPI = async () => {
+            setDaily(await FetchDailyData());
         }
-      ]
-    };
-  
+        fetchAPI();
+    }, []);
 
     return (
         todayCases ? (
-          <BarChart
-          data={data}
-          width={Dimensions.get("window").width}              
-          height={280}
-          chartConfig={{
-            backgroundColor: "white",
-            backgroundGradientFrom: "white",
-            backgroundGradientTo: "white",
-            decimalPlaces: 0, // optional, defaults to 2dp
-            color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-            labelColor: (opacity = 1) => `black`,
-            style: {
-              borderRadius: 16
-            }
-          }}            
-        />
+            <Bar
+                data={
+                    {
+                        // labels: [t('con.1'), t('rec.1'), t('dea.1')],
+                        labels: ["Confirmed", "Recovered", "Deaths"],
+                        datasets: [{
+                            label: "People",
+                            backgroundColor: ['rgba(0,0,255,0.5', 'rgba(0,255,0,0.5)', 'rgb(255, 3, 3)'],
+                            data: [todayCases, todayRecovered, todayDeaths]
+                        }]
+                    }}
+                options={{
+                    legend: { display: false },
+                    title: { display: true, text: `${country}` },
+                }}
+            />
         ) : (<Text>Selected Coountry didn't yet provided the statics of today.</Text>)
     )
-};  
-
-
-const styles = StyleSheet.create({
-  chartContainer: {
-    flex: 1
-  }
-});
+};

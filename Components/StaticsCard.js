@@ -1,111 +1,99 @@
 import React, { useState } from 'react';
-import { CountUp } from 'use-count-up'
+import { Card, CardContent, Typography, Grid, StylesProvider } from '@material-ui/core';
+import CountUp from 'react-countup';
 import { StyleSheet, Text, View } from 'react-native';
-import { Card, Divider } from 'react-native-elements'
 
 
 
 
 export default function AllStaticsCard(props) {
-    // Object.size = function (obj) {
-    //     var size = 0,
-    //         key;
-    //     for (key in obj) {
-    //         if (obj.hasOwnProperty(key)) size++;
-    //     }
-    //     return size;
-    // };
-    
-    if (!JSON.stringify(props.data.cases) || !JSON.stringify(props.vaccineData.allCases)){
+    if (!JSON.stringify(props.data.cases)) {
         return <Text>Loading...</Text>
     }
 
     return (
         <View style={styles.container}>
+            <Grid container spacing={3} justify="center">
+                <Grid item component={Card} xc={12} md={3} style={{borderBottom: "10px solid rgba(0, 0, 255, 0.5)", margin: "2% 0%", width: "30%", height: "130px" }} >
+                    <CardContent style={{ paddingLeft: '0%', paddingRight: '1', paddingTop: '2px', paddingBottom: '9px' }}>
+                        <Typography color="textSecondary" gutterBottom >
+                            {/* {t('con.1')} */}
+                            Confirmed Casses
+                        </Typography>
+                        <Typography variant="h5"  ><CountUp start={0} end={
+                            (props.data.cases).toString()
+                        }
+                            duration={2.5} separator="," /></Typography>
+                        <Typography color="textSecondary" >{new Date(props.data.updated).toDateString()}</Typography>
+                    </CardContent>
+                </Grid>
+                <Grid item component={Card} xc={12} md={3} style={{borderBottom: "10px solid rgba(0, 255, 0, 0.5)", margin: "2% 0%", width: "30%", height: "130px" }} >
+                    <CardContent style={{ paddingLeft: '0%', paddingRight: '1', paddingTop: '2px', paddingBottom: '9px' }}>
+                        <Typography color="textSecondary" gutterBottom>
+                            {/* {(t('rec.1'))} */}
+                            Recovered
+                        </Typography>
+                        <Typography variant="h5"><CountUp start={0} end={
+                            (props.data.recovered).toString()
+                        } duration={2.5} separator="," /></Typography>
+                        <Typography color="textSecondary">{new Date(props.data.updated).toDateString()}</Typography>
+                    </CardContent>
+                </Grid>
+                <Grid item component={Card} xc={12} md={3} style={{borderBottom: "10px solid rgb(255, 3, 3)", margin: "2% 0%", width: "30%", height: "130px" }} >
+                    <CardContent style={{ paddingLeft: '0%', paddingRight: '1', paddingTop: '2px', paddingBottom: '9px' }}>
+                        <Typography color="textSecondary" gutterBottom>
+                            {/* {t('dea.1')} */}
+                            Death
+                            </Typography>
+                        <Typography variant="h5"><CountUp start={0} end={
+                            (props.data.deaths).toString()
+                        } duration={2.5} separator="," /></Typography>
+                        <Typography color="textSecondary">{new Date(props.data.updated).toDateString()}</Typography>
+                    </CardContent>
+                </Grid>
 
-            <View style={styles.cardVaccine}>
-                <Card containerStyle={{ paddingTop: 2, paddingRight: 2, paddingBottom: 0, paddingLeft: 2, borderRadius: 7 }}>
-                    <Card.Title>Vaccined</Card.Title>
-                    <Card.Divider />
-                    <Text>
-                        <CountUp isCounting end={props.vaccineData.allCases.cases} duration={2.5} thousandsSeparator="," />
-                    </Text>
-                    <Text style={styles.date}>{props.vaccineData.allCases.cases === 0  ?  'Not Provided Yet' : 'Congratulations!'}</Text>
-                    <Divider style={{ backgroundColor: "rgba(146, 144, 144, 0.219)", height: 3 }} />
-                </Card>
-            </View>
+                <Grid item component={Card} xc={12} md={3} style={{borderBottom: "10px solid yellow", margin: "2% 0%", width: "30%", height: "130px" }} >
+                    <CardContent style={{ paddingLeft: '0%', paddingRight: '1', paddingTop: '2px', paddingBottom: '9px' }}>
+                        <Typography color="textSecondary" gutterBottom>
+                            {/* {t('Active.1')} */}
+                    Active Cases
+                </Typography>
+                        <Typography variant="h5"><CountUp start={0} end={
+                            (props.data.active).toString()
+                        } duration={2.5} separator="," /></Typography>
+                        <Typography color="textSecondary">{new Date(props.data.updated).toDateString()}</Typography>
 
-            <View style={styles.card}>
-                <Card containerStyle={{ paddingTop: 2, paddingRight: 2, paddingBottom: 0, paddingLeft: 2, borderRadius: 7 }}>
-                    <Card.Title>Confirmed Casses</Card.Title>
-                    <Card.Divider />
-                    <Text>
-                        <CountUp isCounting end={(props.data.cases)} duration={2.5} thousandsSeparator="," />
-                    </Text>
-                    <Text style={styles.date}>{new Date(props.data.updated).toDateString()}</Text>
-                    <Divider style={{ backgroundColor: "rgba(0, 0, 255, 0.5)", height: 3 }} />
-                </Card>
-            </View>
+                    </CardContent>
+                </Grid>
+                <Grid item component={Card} xc={12} md={3} style={{borderBottom: "10px solid blue", margin: "2% 0%", width: "30%", height: "130px" }} >
+                    <CardContent style={{ paddingLeft: '0%', paddingRight: '1', paddingTop: '2px', paddingBottom: '9px' }}>
+                        <Typography color="textSecondary" gutterBottom>
+                            {/* {t('Tests.1')} */}
+                    Tests
+                    </Typography>
+                        <Typography variant="h5"><CountUp start={0} end={
+                            (props.data.tests).toString()
+                        } duration={2.5} separator="," /></Typography>
+                        <Typography color="textSecondary">{new Date(props.data.updated).toDateString()}</Typography>
 
-            <View style={styles.card}>
-                <Card containerStyle={{ paddingTop: 2, paddingRight: 2, paddingBottom: 0, paddingLeft: 2, borderRadius: 7 }}>
-                    <Card.Title>Recovered</Card.Title>
-                    <Card.Divider />
-                    <Text>
-                        <CountUp isCounting end={(props.data.recovered)} duration={2.5} thousandsSeparator="," />
-                    </Text>
-                    <Text style={styles.date}>{new Date(props.data.updated).toDateString()}</Text>
-                    <Divider style={{ backgroundColor: "rgba(0, 255, 0, 0.5)", height: 3 }} />
-                </Card>
-            </View>
+                    </CardContent>
+                </Grid>
+                <Grid item component={Card} xc={12} md={3} style={{borderBottom: "10px solid brown", margin: "2% 0%", width: "30%", height: "130px" }} >
+                    <CardContent style={{ paddingLeft: '0%', paddingRight: '1', paddingTop: '2px', paddingBottom: '9px' }}>
+                        <Typography color="textSecondary" gutterBottom>
+                            {/* {t('CriticalCases.1')} */}
+                    Critical Cases
+                    </Typography>
+                        <Typography variant="h5"><CountUp start={0} end={
+                            (props.data.critical).toString()
+                        } duration={2.5} separator="," /></Typography>
+                        <Typography color="textSecondary">{new Date(props.data.updated).toDateString()}</Typography>
 
-            <View style={styles.card}>
-                <Card containerStyle={{ paddingTop: 2, paddingRight: 2, paddingBottom: 0, paddingLeft: 2, borderRadius: 7 }}>
-                    <Card.Title>Death</Card.Title>
-                    <Card.Divider />
-                    <Text>
-                        <CountUp isCounting end={(props.data.deaths)} duration={2.5} thousandsSeparator="," />
-                    </Text>
-                    <Text style={styles.date}>{new Date(props.data.updated).toDateString()}</Text>
-                    <Divider style={{ backgroundColor: "rgb(255, 3, 3)", height: 3 }} />
-                </Card>
-            </View>
+                    </CardContent>
+                </Grid>
 
-            <View style={styles.card}>
-                <Card containerStyle={{ paddingTop: 2, paddingRight: 2, paddingBottom: 0, paddingLeft: 2, borderRadius: 7 }}>
-                    <Card.Title>Active Cases</Card.Title>
-                    <Card.Divider />
-                    <Text>
-                        <CountUp isCounting end={(props.data.active)} duration={2.5} thousandsSeparator="," />
-                    </Text>
-                    <Text style={styles.date}>{new Date(props.data.updated).toDateString()}</Text>
-                    <Divider style={{ backgroundColor: "yellow", height: 3 }} />
-                </Card>
-            </View>
+            </Grid>
 
-            <View style={styles.card}>
-                <Card containerStyle={{ paddingTop: 2, paddingRight: 2, paddingBottom: 0, paddingLeft: 2, borderRadius: 7 }}>
-                    <Card.Title>Tests</Card.Title>
-                    <Card.Divider />
-                    <Text>
-                        <CountUp isCounting end={(props.data.tests)} duration={2.5} thousandsSeparator="," />
-                    </Text>
-                    <Text style={styles.date}>{new Date(props.data.updated).toDateString()}</Text>
-                    <Divider style={{ backgroundColor: "blue", height: 3 }} />
-                </Card>
-            </View>
-
-            <View style={styles.card}>
-                <Card containerStyle={{ paddingTop: 2, paddingRight: 2, paddingBottom: 0, paddingLeft: 2, borderRadius: 7 }}>
-                    <Card.Title>Critical Cases</Card.Title>
-                    <Card.Divider />
-                    <Text>
-                        <CountUp isCounting end={(props.data.critical)} duration={2.5} thousandsSeparator="," />
-                    </Text>
-                    <Text style={styles.date}>{new Date(props.data.updated).toDateString()}</Text>
-                    <Divider style={{ backgroundColor: "brown", height: 3 }} />
-                </Card>
-            </View>
 
         </View>
     )
@@ -113,60 +101,52 @@ export default function AllStaticsCard(props) {
 
 
 export function TodayStaticsCard(props) {
-    if (!JSON.stringify(props.data.cases) || !JSON.stringify(props.vaccineData.todayCases)) {
+    if (!JSON.stringify(props.data.cases)) {
         return <Text>Loading...</Text>
     }
 
     return (
         <View style={styles.container}>
+            <Grid container spacing={3} justify="center">
+                <Grid item component={Card} xc={12} md={3} style={{borderBottom: "10px solid rgba(0, 0, 255, 0.5)", margin: "2% 0%", width: "30%", height: "130px" }} >
+                    <CardContent style={{ paddingLeft: '0%', paddingRight: '1', paddingTop: '2px', paddingBottom: '9px' }}>
+                        <Typography color="textSecondary" gutterBottom >
+                            {/* {t('con.1')} */}
+                        Confirmed Casses
+                    </Typography>
+                        <Typography variant="h5"  ><CountUp start={0} end={
+                            (props.data.todayCases).toString()
+                        }
+                            duration={2.5} separator="," /></Typography>
+                        <Typography color="textSecondary" >{new Date(props.data.updated).toDateString()}</Typography>
+                    </CardContent>
+                </Grid>
+                <Grid item component={Card} xc={12} md={3} style={{borderBottom: "10px solid rgba(0, 255, 0, 0.5)", margin: "2% 0%", width: "30%", height: "130px" }} >
+                    <CardContent style={{ paddingLeft: '0%', paddingRight: '1', paddingTop: '2px', paddingBottom: '9px' }}>
+                        <Typography color="textSecondary" gutterBottom>
+                            {/* {(t('rec.1'))} */}
+                        Recovered
+                    </Typography>
+                        <Typography variant="h5"><CountUp start={0} end={
+                            (props.data.todayRecovered).toString()
+                        } duration={2.5} separator="," /></Typography>
+                        <Typography color="textSecondary">{new Date(props.data.updated).toDateString()}</Typography>
+                    </CardContent>
+                </Grid>
+                <Grid item component={Card} xc={12} md={3} style={{borderBottom: "10px solid rgb(255, 3, 3)", margin: "2% 0%", width: "30%", height: "130px" }} >
+                    <CardContent style={{ paddingLeft: '0%', paddingRight: '1', paddingTop: '2px', paddingBottom: '9px' }}>
+                        <Typography color="textSecondary" gutterBottom>
+                            {/* {t('dea.1')} */}
+                        Death
+                        </Typography>
+                        <Typography variant="h5"><CountUp start={0} end={
+                            (props.data.todayDeaths).toString()
+                        } duration={2.5} separator="," /></Typography>
+                        <Typography color="textSecondary">{new Date(props.data.updated).toDateString()}</Typography>
+                    </CardContent>
+                </Grid>
+            </Grid>
 
-        <View style={styles.card}>
-                <Card containerStyle={{ paddingTop: 2, paddingRight: 2, paddingBottom: 0, paddingLeft: 2, borderRadius: 7 }}>
-                    <Card.Title>Vaccined</Card.Title>
-                    <Card.Divider />
-                    <Text>
-                        <CountUp isCounting end={props.vaccineData.todayCases.cases} duration={2.5} thousandsSeparator="," />
-                    </Text>
-                    <Text style={styles.date}>{props.vaccineData.todayCases.cases === 0  ?  'Not Provided Yet' : 'Congratulations!'}</Text>
-                    <Divider style={{ backgroundColor: "rgba(146, 144, 144, 0.219)", height: 3 }} />
-                </Card>
-            </View>
-
-            <View style={styles.card}>
-                <Card containerStyle={{ paddingTop: 2, paddingRight: 2, paddingBottom: 0, paddingLeft: 2, borderRadius: 7 }}>
-                    <Card.Title>Confirmed Casses</Card.Title>
-                    <Card.Divider />
-                    <Text>
-                        <CountUp isCounting end={(props.data.todayCases)} duration={2.5} thousandsSeparator="," />
-                    </Text>
-                    <Text style={styles.date}>{new Date(props.data.updated).toDateString()}</Text>
-                    <Divider style={{ backgroundColor: "rgba(0, 0, 255, 0.5)", height: 3 }} />
-                </Card>
-            </View>
-
-            <View style={styles.card}>
-                <Card containerStyle={{ paddingTop: 2, paddingRight: 2, paddingBottom: 0, paddingLeft: 2, borderRadius: 7 }}>
-                    <Card.Title>Recovered</Card.Title>
-                    <Card.Divider />
-                    <Text>
-                        <CountUp isCounting end={(props.data.todayRecovered)} duration={2.5} thousandsSeparator="," />
-                    </Text>
-                    <Text style={styles.date}>{new Date(props.data.updated).toDateString()}</Text>
-                    <Divider style={{ backgroundColor: "rgba(0, 255, 0, 0.5)", height: 3 }} />
-                </Card>
-            </View>
-
-            <View style={styles.card}>
-                <Card containerStyle={{ paddingTop: 2, paddingRight: 2, paddingBottom: 0, paddingLeft: 2, borderRadius: 7 }}>
-                    <Card.Title>Death</Card.Title>
-                    <Divider />
-                    <Text>
-                        <CountUp isCounting end={(props.data.todayDeaths)} duration={2.5} thousandsSeparator="," />
-                    </Text>
-                    <Text style={styles.date}>{new Date(props.data.updated).toDateString()}</Text>
-                    <Divider style={{ backgroundColor: "rgb(255, 3, 3)", height: 3 }} />
-                </Card>
-            </View>
 
         </View>
     )
@@ -174,25 +154,14 @@ export function TodayStaticsCard(props) {
 
 const styles = StyleSheet.create({
     container: {
-        flexDirection: 'row',
-        flexWrap: 'wrap'
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        margin: "10px 0"
     },
     card: {
-        textAlign: "center",
-        justifyContent: "center",
-        width: '50%',
-        padding: 0
-    },
-    cardVaccine: {
-        textAlign: "center",
-        justifyContent: "center",
-        width: '55%',
-        marginRight: 'auto',
-        marginLeft: 'auto'
-    },
-    date: {
-        opacity: .5,
-        fontSize: 10,
-        paddingBottom: 10
+        margin: "2% 0%",
+        width: "50%",
+        height: "130px"
     }
 })

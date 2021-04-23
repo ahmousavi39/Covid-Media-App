@@ -13,6 +13,7 @@ const TabNavBottom = props => {
         activeTintColor : 'tomato',
         inactiveTintColor : 'gray',
         labelStyle : {
+          fontFamily : 'Dirooz'
         }
       }}>
         <Tab.Screen name="All Statics" component={AllStatics} 
